@@ -1,0 +1,5 @@
+name: OfflinePlayerLib
+main: com.pixelcatt.offlineplayerlib.OfflinePlayerLib
+version: ${project.version}
+api-version: 1.21
+softdepend: [floodgate, LibreLogin]
