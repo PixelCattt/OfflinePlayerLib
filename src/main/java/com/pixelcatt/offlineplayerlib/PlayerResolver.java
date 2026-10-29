@@ -16,23 +16,6 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 
-/**
- * Resolves a player name to the UUID that player really uses on this server.
- *
- * Resolution order:
- *  1. An online player with that exact name
- *  2. The server's profile cache (usercache.json) via Bukkit.getOfflinePlayerIfCached
- *  3. Floodgate/Geyser API (Bedrock names, using Floodgate's real configured prefix)
- *  4. LibreLogin's configured UUID creator (CRACKED = offline UUID, MOJANG = Mojang API,
- *     falling back to the offline UUID only on a definitive "no such profile")
- *  5. Plain server mode (offline UUID when offline-mode, otherwise Mojang/Geyser by name)
- *
- * Bukkit.getOfflinePlayer(String) is deliberately never used: on an offline-mode server it
- * skips the profile cache and invents a name-derived UUID.
- *
- * Steps 3-5 perform blocking network I/O, so they only ever run off the main thread.
-**/
-
 public class PlayerResolver {
 
     private record Context(UUID knownUuid, boolean libreLogin, boolean floodgate,
